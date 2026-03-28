@@ -217,21 +217,17 @@ img.onload=()=>{IMG[key]=img;resolve(true)};
 img.onerror=()=>{IMG[key]=null;resolve(false)};
 img.src=src;
 })}
-// Pre-load all replaceable assets (non-blocking, fallback if missin// Use cache-busting and absolute-style relative paths
-const timestamp = Date.now();
+// Pre-load all replaceable assets (non-blocking, fallback if missing)
 Promise.all([
-loadImg('l1bg','./assets/level1-bg.png?v='+timestamp),
-loadImg('l2bg','./assets/level2-bg-far.png?v='+timestamp),
-loadImg('l2ground','./assets/level2-ground.png?v='+timestamp),
-loadImg('l3bg','./assets/level3-bg.png?v='+timestamp),
-loadImg('plane','./assets/plane-sprite.png?v='+timestamp),
-loadImg('runner','./assets/runner-sprite.png?v='+timestamp),
-loadImg('obstacles','./assets/obstacles.png?v='+timestamp),
-loadImg('eggs','./assets/eggs-sprite.png?v='+timestamp),
-]).then(() => {
-    console.log('Assets loaded successfully:', Object.keys(IMG).filter(k => IMG[k]));
-    if (currentLevel === 1) bakeL1Bg(); // Re-bake if already on level 1
-}).catch(err => console.error('Asset loading failed:', err));External images found:',Object.entries(IMG).filter(([k,v])=>v).map(([k])=>k).join(', ')||'none (using Canvas fallback)'));
+loadImg('l1bg','assets/level1-bg.png'),
+loadImg('l2bg','assets/level2-bg-far.png'),
+loadImg('l2ground','assets/level2-ground.png'),
+loadImg('l3bg','assets/level3-bg.png'),
+loadImg('plane','assets/plane-sprite.png'),
+loadImg('runner','assets/runner-sprite.png'),
+loadImg('obstacles','assets/obstacles.png'),
+loadImg('eggs','assets/eggs-sprite.png'),
+]).then(()=>console.log('Assets loaded. External images found:',Object.entries(IMG).filter(([k,v])=>v).map(([k])=>k).join(', ')||'none (using Canvas fallback)'));
 
 // ===================== LEVEL 1: EGG HUNT =====================
 let l1Eggs=[],l1Found=0,l1Time=30,l1Timer=null,l1Floats=[],l1BgCanvas=null;
