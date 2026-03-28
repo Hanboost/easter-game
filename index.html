@@ -105,7 +105,16 @@ const AMBER='#EF9F27',BLUE='#185FA5',GREEN='#3B6D11',RED='#A32D2D';
 
 // ===================== AUDIO =====================
 let audioCtx=null,soundEnabled=true,bgmNodes=[];
-function initAudio(){if(audioCtx)return;audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume()}
+function initAudio(){
+    if(audioCtx)return;
+    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==='suspended')audioCtx.resume();
+    playIntro();
+}
+function playIntro(){
+    const audio = new Audio('assets/intro.wav');
+    audio.play().catch(e => console.log('Audio play blocked'));
+}
 function toggleSound(){soundEnabled=!soundEnabled;document.getElementById('sound-toggle').textContent=soundEnabled?'🔊':'🔇';if(!soundEnabled)stopBGM()}
 function stopBGM(){bgmNodes.forEach(n=>{try{n.stop()}catch(e){}});bgmNodes=[]}
 function playBGM(level){
@@ -219,10 +228,10 @@ img.src=src;
 })}
 // Pre-load all replaceable assets (non-blocking, fallback if missing)
 Promise.all([
-loadImg('l1bg','assets/level1-bg.png'),
-loadImg('l2bg','assets/level2-bg-far.png'),
+loadImg('l1bg','assets/level1-bg.png?v=brand'),
+loadImg('l2bg','assets/level2-bg-far.png?v=brand'),
 loadImg('l2ground','assets/level2-ground.png'),
-loadImg('l3bg','assets/level3-bg.png'),
+loadImg('l3bg','assets/level3-bg.png?v=brand'),
 loadImg('plane','assets/plane-sprite.png'),
 loadImg('runner','assets/runner-sprite.png'),
 loadImg('obstacles','assets/obstacles.png'),
