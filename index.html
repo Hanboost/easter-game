@@ -260,9 +260,8 @@ for(const o of l2.obstacles){if(IMG.obstacles){ctx.drawImage(IMG.obstacles,0,0,4
 for(const e of l2.eggs){if(!e.collected)drawEgg(e.x,e.y,10,13,e.color)}
 ctx.save();if(l2.invincible>0&&Math.floor(l2.frameCount/4)%2===0)ctx.globalAlpha=.3;
 if(IMG.runner){
-    // Assuming runner sprite sheet is 4 frames horizontally, each frame is 1/4 of width
-    const frameW = IMG.runner.width / 4;
-    ctx.drawImage(IMG.runner, l2.runFrame * frameW, 0, frameW, IMG.runner.height, 100 - 24, l2.py - 4, 48, 48);
+    // Draw 48x48 frame from the 192x48 horizontal strip
+    ctx.drawImage(IMG.runner, l2.runFrame * 48, 0, 48, 48, 100 - 24, l2.py - 4, 48, 48);
 }else{ctx.fillStyle=BLUE;ctx.fillRect(100-12,l2.py,24,40)}
 ctx.restore();for(const f of l2.floats){ctx.save();ctx.globalAlpha=1-f.t;ctx.fillStyle=AMBER;ctx.font='bold 16px "Baloo 2"';ctx.fillText('+1',f.x,f.y-f.t*30);ctx.restore()}
 drawRoundRect(ctx,10,10,W-20,36,18);ctx.fillStyle='rgba(255,255,255,.92)';ctx.fill();ctx.font='600 13px Nunito';ctx.textAlign='left';ctx.fillStyle=BLUE;ctx.fillText('🏃 Tool Runner',22,33);ctx.textAlign='center';ctx.fillStyle='#333';ctx.fillText(`Eggs: ${l2.collected}/20  ❤️ ${l2.lives}`,W/2,33);ctx.textAlign='right';ctx.fillStyle=l2.time<=10?RED:'#333';ctx.fillText(`⏱ ${l2.time}s`,W-22,33)
