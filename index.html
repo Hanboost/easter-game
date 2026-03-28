@@ -260,7 +260,8 @@ for(const o of l2.obstacles){if(IMG.obstacles){ctx.drawImage(IMG.obstacles,0,0,4
 for(const e of l2.eggs){if(!e.collected)drawEgg(e.x,e.y,10,13,e.color)}
 ctx.save();if(l2.invincible>0&&Math.floor(l2.frameCount/4)%2===0)ctx.globalAlpha=.3;
 if(IMG.runner){
-    ctx.drawImage(IMG.runner, 100 - 24, l2.py - 8, 48, 48);
+    const frame = Math.floor(l2.frameCount / 6) % 4;
+    ctx.drawImage(IMG.runner, frame * 48, 0, 48, 48, 100 - 24, l2.py - 8, 48, 48);
 } else {
     ctx.fillStyle=BLUE;
     ctx.fillRect(100-12,l2.py,24,40);
@@ -314,7 +315,17 @@ function drawL3(){
 if(IMG.l3bg){ctx.drawImage(IMG.l3bg,0,0,W,H)}else{ctx.fillStyle='#0D47A1';ctx.fillRect(0,0,W,H)}
 ctx.fillStyle=AMBER;for(const b of l3.bullets)ctx.fillRect(b.x-2,b.y,4,12);
 for(const e of l3.eggs)drawEgg(e.x,e.y,12,15,e.color);
-if(IMG.plane){ctx.drawImage(IMG.plane,l3.px-32,l3.py-32,64,64)}else{ctx.fillStyle='#CFD8DC';ctx.beginPath();ctx.moveTo(l3.px,l3.py-25);ctx.lineTo(l3.px-20,l3.py+15);ctx.lineTo(l3.px+20,l3.py+15);ctx.closePath();ctx.fill()}
+if(IMG.plane){
+    ctx.drawImage(IMG.plane, l3.px - 32, l3.py - 32, 64, 64);
+} else {
+    ctx.fillStyle='#CFD8DC';
+    ctx.beginPath();
+    ctx.moveTo(l3.px, l3.py - 25);
+    ctx.lineTo(l3.px - 20, l3.py + 15);
+    ctx.lineTo(l3.px + 20, l3.py + 15);
+    ctx.closePath();
+    ctx.fill();
+}
 for(const f of l3.floats){ctx.save();ctx.globalAlpha=1-f.t;ctx.fillStyle='#FFF';ctx.font='bold 16px "Baloo 2"';ctx.fillText('+1',f.x,f.y);ctx.restore()}
 drawRoundRect(ctx,10,10,W-20,36,18);ctx.fillStyle='rgba(255,255,255,.92)';ctx.fill();ctx.font='600 13px Nunito';ctx.textAlign='left';ctx.fillStyle=BLUE;ctx.fillText('✈️ Sky Shooter',22,33);ctx.textAlign='center';ctx.fillStyle='#333';ctx.fillText(`Score: ${l3.score}/30  Missed: ${l3.missed}/5`,W/2,33);ctx.textAlign='right';ctx.fillStyle=l3.time<=10?RED:'#333';ctx.fillText(`⏱ ${l3.time}s`,W-22,33)
 }
