@@ -8,7 +8,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--amber:#EF9F27;--blue:#185FA5;--green:#3B6D11;--red:#A32D2D;--bg:#FAEEDA;--wood:#5D4037;--wood-light:#8D6E63}
-body{background:var(--bg);font-family:'Nunito',sans-serif;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;touch-action:none;-webkit-user-select:none;user-select:none}
+body{background:var(--bg);font-family:'Nunito',sans-serif;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:100vh;touch-action:none;-webkit-user-select:none;user-select:none;padding-top:10px}
 #progress-bar{position:fixed;top:0;left:0;height:4px;background:var(--amber);transition:width 400ms ease;z-index:1000}
 #game-wrapper{position:relative;width:560px;height:380px;max-width:100vw;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.15)}
 canvas{display:block;width:100%;height:100%}
@@ -48,9 +48,18 @@ canvas{display:block;width:100%;height:100%}
 #transition-overlay p{color:rgba(255,255,255,.7);font-size:13px;margin-bottom:14px;max-width:340px;text-align:center}
 #transition-overlay .countdown{color:#fff;font-family:'Baloo 2',cursive;font-size:64px;line-height:1}
 @media(max-width:600px){
-#game-wrapper{border-radius:0;width:100vw;height:calc(100vw*380/560)}
-.level-preview{flex-direction:row;gap:6px}.level-card{width:100px;padding:8px}
-.screen h1{font-size:22px}.screen p{font-size:11px}.btn{padding:10px 28px;font-size:16px}
+body{padding-top:5px}
+#game-wrapper{border-radius:0;width:100vw;height:calc(100vw*380/560);max-height:90vh}
+.level-preview{flex-direction:row;gap:4px;margin:8px 0}
+.level-card{width:95px;padding:6px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.level-card .emoji{font-size:18px}
+.level-card .lname{font-size:10px}
+.level-card .ldesc{font-size:8px;line-height:1.1}
+.screen h1{font-size:18px;margin-bottom:2px}
+.screen h2{font-size:14px;margin-bottom:8px}
+.screen p{font-size:10px;margin-bottom:6px}
+.btn{padding:8px 24px;font-size:14px}
+#sound-toggle{top:8px;right:8px;width:32px;height:32px;font-size:16px}
 }
 </style>
 </head>
@@ -79,9 +88,9 @@ canvas{display:block;width:100%;height:100%}
 
 <div id="screen-win" class="screen">
 <div class="win-emoji">🎉🏆🎉</div><h1>Congratulations!</h1><h2>You beat all 3 levels!</h2>
-<div class="coupon-box"><div class="coupon-code">HAPPY EASTER</div></div>
+<div class="coupon-box"><div class="coupon-code">HAPPYEASTER</div></div>
 <button class="btn-copy" id="copyBtn" onclick="copyCoupon()">📋 Copy Code</button>
-<p class="share-text">Use HAPPY EASTER for 20% off at hanboost.com</p>
+<p class="share-text">Use HAPPYEASTER for 20% off at hanboost.com</p>
 <button class="btn btn-green" onclick="window.open('https://hanboost.com','_blank')">Shop Now 🛒</button>
 </div>
 </div>
@@ -195,7 +204,7 @@ function setProgress(p){document.getElementById('progress-bar').style.width=p+'%
 function stopGame(){gameRunning=false;gamePaused=false;if(animFrameId){cancelAnimationFrame(animFrameId);animFrameId=null}stopBGM();document.getElementById('pause-overlay').classList.remove('active')}
 function drawRoundRect(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath()}
 function drawEgg(x,y,rx,ry,color){ctx.fillStyle=color;ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='rgba(255,255,255,.35)';ctx.beginPath();ctx.ellipse(x-rx*.3,y-ry*.3,rx*.3,ry*.35,Math.PI/6,0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(x-rx*.7,y);ctx.lineTo(x+rx*.7,y);ctx.stroke()}
-function copyCoupon(){navigator.clipboard.writeText('HAPPY EASTER').then(()=>{document.getElementById('copyBtn').textContent='✅ Copied!';setTimeout(()=>{document.getElementById('copyBtn').textContent='📋 Copy Code'},2e3)})}
+function copyCoupon(){navigator.clipboard.writeText('HAPPYEASTER').then(()=>{document.getElementById('copyBtn').textContent='✅ Copied!';setTimeout(()=>{document.getElementById('copyBtn').textContent='📋 Copy Code'},2e3)})}
 
 // ===================== IMAGE LOADING (designer-replaceable assets) =====================
 // If assets/xxx.png exists, use it. Otherwise fall back to Canvas-drawn graphics.
